@@ -23,7 +23,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 
 export default defineConfig({
-   site: 'https:/vezironi.com',
+   site: 'https://vezironi.com',
    integrations: [
       expressiveCode({
          themes: ['github-light', 'github-dark'],
@@ -70,7 +70,15 @@ export default defineConfig({
       }),
       mdx(),
       react(),
-      sitemap(),
+      sitemap({
+         filter: (page) =>
+            !page.includes('/404') &&
+            !page.includes('/rss.xml') &&
+            !page.includes('/robots.txt'),
+         changefreq: 'weekly',
+         priority: 0.7,
+         lastmod: new Date(),
+      }),
       icon(),
    ],
    vite: {
