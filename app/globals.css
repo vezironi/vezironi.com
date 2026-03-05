@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+.blog-content pre code.hljs {
+	color: #e5e7eb !important;
+	background: transparent;
+}
+
+.blog-content pre:has(code.language-ts),
+.blog-content pre:has(code.language-typescript) {
+	border-color: rgb(96 165 250 / 0.6);
+}
+
+.blog-content pre:has(code.language-js),
+.blog-content pre:has(code.language-javascript) {
+	border-color: rgb(250 204 21 / 0.6);
+}
+
+.blog-content pre:has(code.language-lua) {
+	border-color: rgb(249 168 212 / 0.6);
+}
+
+.blog-content pre:has(code.language-json) {
+	border-color: rgb(74 222 128 / 0.6);
+}
+
+.blog-content .hljs-comment,
+.blog-content .hljs-quote {
+	color: #6b7280 !important;
+}
+
+.blog-content .hljs-keyword,
+.blog-content .hljs-selector-tag,
+.blog-content .hljs-literal,
+.blog-content .hljs-title,
+.blog-content .hljs-section,
+.blog-content .hljs-doctag,
+.blog-content .hljs-type {
+	color: #93c5fd !important;
+}
+
+.blog-content .hljs-string,
+.blog-content .hljs-title.class_,
+.blog-content .hljs-title.class,
+.blog-content .hljs-variable,
+.blog-content .hljs-template-variable {
+	color: #86efac !important;
+}
+
+.blog-content .hljs-number,
+.blog-content .hljs-symbol,
+.blog-content .hljs-bullet,
+.blog-content .hljs-attribute,
+.blog-content .hljs-built_in {
+	color: #fde047 !important;
+}
+
+.blog-content .hljs-function,
+.blog-content .hljs-title.function_,
+.blog-content .hljs-title.function,
+.blog-content .hljs-subst {
+	color: #f9a8d4 !important;
+}
+
+.blog-content .hljs-params,
+.blog-content .hljs-property,
+.blog-content .hljs-operator,
+.blog-content .hljs-punctuation {
+	color: #d1d5db !important;
+}
