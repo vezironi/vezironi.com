@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 type ProjectItem = {
@@ -7,6 +8,7 @@ type ProjectItem = {
     title: string;
     subtitle: string;
     bannerStyle: string;
+    bannerImage?: string;
     stack: string;
     href: string;
     status: string;
@@ -18,6 +20,8 @@ type ReferenceItem = {
     project: string;
     note: string;
     bannerStyle: string;
+    bannerImage?: string;
+    logoImage?: string;
     href: string;
     year: string;
 };
@@ -39,61 +43,82 @@ type ShowcaseTabsProps = {
 
 const projectItems: ProjectItem[] = [
     {
-        id: "project-1",
-        title: "Project Name",
-        subtitle: "Short project summary you can update later.",
-        bannerStyle: "linear-gradient(135deg, #1d4ed8 0%, #0f172a 70%)",
-        stack: "Next.js / TypeScript / Tailwind",
-        href: "#",
-        status: "In Progress",
-    },
-    {
-        id: "project-2",
-        title: "Landing System",
-        subtitle: "Reusable page blocks and CMS-ready structure.",
-        bannerStyle: "linear-gradient(135deg, #0f766e 0%, #111827 70%)",
-        stack: "Astro / Vue / API",
-        href: "#",
+        id: "0resmon_website",
+        title: "0Resmon Studio Website",
+        subtitle: "Official website for 0Resmon Studio, showcasing their FiveM Tebex store design and integration services.",
+        bannerStyle: "linear-gradient(135deg, #be123c 0%, #111827 70%)",
+        bannerImage: "/projects/0resmon_banner.png",
+        stack: "Twig / JavaScript / Tailwind / GSAP",
+        href: "https://0resmon.tebex.io/",
         status: "Completed",
     },
     {
-        id: "project-3",
-        title: "Dashboard Kit",
-        subtitle: "Admin panel starter with auth and analytics.",
-        bannerStyle: "linear-gradient(135deg, #7c2d12 0%, #111827 70%)",
-        stack: "React / Express / PostgreSQL",
-        href: "#",
-        status: "Private",
+        id: "whitebilisim_website",
+        title: "White Bilişim Website",
+        subtitle: "Official website for White Bilişim, showcasing their web and VDS hosting services.",
+        bannerStyle: "linear-gradient(135deg, #6d28d9 0%, #111827 70%)",
+        bannerImage: "/projects/whitebilisim_banner.png",
+        stack: "AstroJS / ReactJS / Tailwind",
+        href: "https://whitebilisim.com/",
+        status: "Completed",
     },
 ];
 
 const referenceItems: ReferenceItem[] = [
     {
-        id: "ref-1",
-        brand: "Brand Name",
-        project: "E-commerce Revamp",
-        note: "Performance-focused storefront and checkout rebuild.",
-        bannerStyle: "linear-gradient(135deg, #6d28d9 0%, #111827 70%)",
-        href: "#",
-        year: "2026",
-    },
-    {
-        id: "ref-2",
-        brand: "Studio Name",
-        project: "Portfolio Platform",
-        note: "Visual direction, responsive design and deployment.",
+        id: "0resmon",
+        brand: "0Resmon Studio",
+        project: "Fivem Tebex Store",
+        note: "Custom Tebex store design and integration for a popular FiveM server.",
         bannerStyle: "linear-gradient(135deg, #be123c 0%, #111827 70%)",
-        href: "#",
-        year: "2025",
+        bannerImage: "/references/0resmon_banner.webp",
+        logoImage: "/references/0resmon_logo.webp",
+        href: "https://0resmon.tebex.io/",
+        year: "2024-2026",
     },
     {
-        id: "ref-3",
-        brand: "Agency Name",
-        project: "Marketing Site",
-        note: "Conversion-first redesign with new content flow.",
-        bannerStyle: "linear-gradient(135deg, #0369a1 0%, #111827 70%)",
-        href: "#",
-        year: "2024",
+        id: "whitebilisim",
+        brand: "White Bilişim",
+        project: "Web and VDS hosting services",
+        note: "Provided web hosting and virtual dedicated server (VDS) services for various clients, ensuring reliable and scalable hosting solutions.",
+        bannerStyle: "linear-gradient(135deg, #6d28d9 0%, #111827 70%)",
+        bannerImage: "/references/whitebilisim_banner.webp",
+        logoImage: "/references/whitebilisim_logo.webp",
+        href: "https://whitebilisim.com/",
+        year: "2025-2025",
+    },
+    {
+        id: "fast",
+        brand: "Fast Script",
+        project: "Fivem Tebex Store",
+        note: "Custom Tebex store design and integration for a popular FiveM server.",
+        bannerStyle: "linear-gradient(135deg, #be123c 0%, #111827 70%)",
+        bannerImage: "/references/fastscript_banner.webp",
+        logoImage: "/references/fastscript_logo.webp",
+        href: "https://fastscripts.tebex.io/",
+        year: "2025-2025",
+    },
+    {
+        id: "borp",
+        brand: "BORP",
+        project: "Fivem Roleplay Server",
+        note: "Provided custom script development and server optimization for a growing FiveM roleplay community.",
+        bannerStyle: "linear-gradient(135deg, #6d28d9 0%, #111827 70%)",
+        bannerImage: "/references/borp_banner.webp",
+        logoImage: "/references/borp_logo.webp",
+        href: "https://discord.gg/sXQusRBmwh",
+        year: "2025-2025",
+    },
+    {
+        id: "night",
+        brand: "NightV",
+        project: "Fivem Roleplay Server",
+        note: "Provided custom script development and server optimization for a growing FiveM roleplay community.",
+        bannerStyle: "linear-gradient(135deg, #6d28d9 0%, #111827 70%)",
+        bannerImage: "/references/night_banner.webp",
+        logoImage: "/references/night_logo.webp",
+        href: "https://discord.gg/nightvrp",
+        year: "2025-2025",
     },
 ];
 
@@ -155,6 +180,15 @@ export default function ShowcaseTabs({ publicProjects }: ShowcaseTabsProps) {
                             className="group border border-neutral-400/20 border-dashed overflow-hidden hover:border-neutral-300/60 transition-all duration-300"
                         >
                             <div className="h-24 w-full relative" style={{ backgroundImage: item.bannerStyle }}>
+                                {item.bannerImage ? (
+                                    <Image
+                                        src={item.bannerImage}
+                                        alt={`${item.title} banner`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="absolute inset-0 h-full w-full object-cover object-top"
+                                    />
+                                ) : null}
                                 <div className="absolute inset-0 bg-linear-to-t from-neutral-950/70 to-transparent" />
                                 <div className="absolute left-3 bottom-2 text-[10px] font-mono uppercase tracking-widest text-white/85">
                                     {item.status}
@@ -182,6 +216,15 @@ export default function ShowcaseTabs({ publicProjects }: ShowcaseTabsProps) {
                             className="group border border-neutral-400/20 border-dashed overflow-hidden hover:border-neutral-300/60 transition-all duration-300"
                         >
                             <div className="h-24 w-full relative" style={{ backgroundImage: item.bannerStyle }}>
+                                {item.bannerImage ? (
+                                    <Image
+                                        src={item.bannerImage}
+                                        alt={`${item.brand} banner`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="absolute inset-0 h-full w-full object-cover"
+                                    />
+                                ) : null}
                                 <div className="absolute inset-0 bg-linear-to-t from-neutral-950/70 to-transparent" />
                                 <div className="absolute left-3 bottom-2 text-[10px] font-mono uppercase tracking-widest text-white/85">
                                     {item.year}
@@ -189,7 +232,18 @@ export default function ShowcaseTabs({ publicProjects }: ShowcaseTabsProps) {
                             </div>
 
                             <div className="p-3">
-                                <p className="text-sm font-medium text-neutral-100 truncate">{item.brand}</p>
+                                <div className="flex items-center gap-2">
+                                    {item.logoImage ? (
+                                        <Image
+                                            src={item.logoImage}
+                                            alt={`${item.brand} logo`}
+                                            width={20}
+                                            height={20}
+                                            className="h-5 w-5 rounded-sm object-cover border border-neutral-600/40"
+                                        />
+                                    ) : null}
+                                    <p className="text-sm font-medium text-neutral-100 truncate">{item.brand}</p>
+                                </div>
                                 <p className="text-xs text-neutral-500 font-mono mt-1 truncate">{item.project}</p>
                                 <p className="text-xs text-neutral-400 mt-3 line-clamp-2">{item.note}</p>
                             </div>
