@@ -12,7 +12,24 @@ import SpotifySection from "@/components/home/spotify-section";
 import StatusStrip from "@/components/home/status-strip";
 import type { GithubRepo, LanyardResponse } from "@/components/home/types";
 import type { Metadata } from "next";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+
+const LANYARD_API_URL = "https://api.lanyard.rest/v1/users/996488031932514394";
+const FALLBACK_LANYARD: LanyardResponse = {
+  data: {
+    discord_user: {
+      id: "996488031932514394",
+      avatar: "",
+      username: "vezironi",
+      discriminator: "0",
+      public_flags: 0,
+    },
+    activities: [],
+    listening_to_spotify: false,
+    discord_status: "offline",
+    spotify: null,
+  },
+};
 
 export const metadata: Metadata = {
   title: "Home",
@@ -33,12 +50,33 @@ export const metadata: Metadata = {
   },
 };
 
-async function getLanyard() {
-  const res = await fetch(absoluteUrl("/api/lanyard"), {
-    cache: "no-store",
-  });
+async function getLanyard(): Promise<LanyardResponse> {
+  try {
+    const res = await fetch(LANYARD_API_URL, {
+      next: { revalidate: 60 },
+      headers: {
+        Accept: "application/json",
+      },
+    });
 
-  return res.json() as Promise<LanyardResponse>;
+    if (!res.ok) {
+      return FALLBACK_LANYARD;
+    }
+
+    const contentType = res.headers.get("content-type") ?? "";
+    if (!contentType.includes("application/json")) {
+      return FALLBACK_LANYARD;
+    }
+
+    const data = (await res.json()) as LanyardResponse;
+    if (!data?.data?.discord_user?.id) {
+      return FALLBACK_LANYARD;
+    }
+
+    return data;
+  } catch {
+    return FALLBACK_LANYARD;
+  }
 }
 
 async function getGithubProjects() {
@@ -69,7 +107,9 @@ export default async function Home() {
   const userDescription =
     discordData.data?.activities?.find((activity) => activity.id === "custom")?.state ?? null;
 
-  const avatarUrl = `https://cdn.discordapp.com/avatars/${discordData.data.discord_user.id}/${discordData.data.discord_user.avatar}.webp?size=512`;
+  const avatarUrl = discordData.data.discord_user.avatar
+    ? `https://cdn.discordapp.com/avatars/${discordData.data.discord_user.id}/${discordData.data.discord_user.avatar}.webp?size=512`
+    : "https://cdn.discordapp.com/embed/avatars/0.png";
   const mappedPublicProjects = publicProjects.map((project) => ({
     id: project.id,
     name: project.name,
