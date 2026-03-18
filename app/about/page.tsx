@@ -52,7 +52,7 @@ const equipmentItems = [
     {
         category: "Mouse",
         name: "ATK Blazing Sky U2 Ultimate",
-        note: "PAW 3950 Ultra sensor, Nordic 52840 wireless chipset, 8000Hz polling rate",
+        note: "PAW 3950 Ultra sensor Nordic 52840 MCU 8000Hz",
         href: "https://www.atk.store/products/atk-blazing-sky-u2-v2-superlight-wireless-gaming-mouse",
     },
     {
@@ -64,7 +64,7 @@ const equipmentItems = [
     {
         category: "Audio Mixer",
         name: "MaonoCaster AMG1 NEO Audio Mixer",
-        note: "Compact audio mixer designed for streamers, podcasters and content creators with multiple input options and built-in sound effects",
+        note: "Compact audio mixer designed for streamers and content creators",
         href: "https://www.maono.com/collections/maonocaster-audio-interface-and-mixer/products/maonocaster-amg1-neo-audio-mixer-for-game-streaming",
     },
     {
