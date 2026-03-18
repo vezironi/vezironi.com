@@ -20,41 +20,65 @@ const focusAreas = [
 
 const equipmentItems = [
     {
-        category: "Laptop",
-        name: "MacBook Pro / Custom Setup",
-        note: "Main development machine",
+        category: "PC",
+        name: "Custom-built Desktop",
+        note: "Intel i5-13400F CPU, 32GB DDR5 RAM, NVIDIA RTX 4060TI GPU",
         href: "#",
     },
     {
         category: "Monitor",
-        name: "27-inch 1440p",
-        note: "Primary workspace display",
+        name: "LG UltraGear 27GS75Q-B",
+        note: "27-inch 180Hz 1ms 1440p gaming monitor",
+        href: "https://www.vatanbilgisayar.com/lg-27-ultragear-27gs75q-b-apd-1ms-180hz-full-hd-ips-gaming-monitor.html",
+    },
+    {
+        category: "Secondary Monitor",
+        name: "Twisted Minds TM27FHD100IPS",
+        note: "27-inch 100Hz 1ms 1080p office monitor",
         href: "#",
     },
     {
         category: "Keyboard",
-        name: "Mechanical Keyboard",
-        note: "Daily coding driver",
-        href: "#",
+        name: "Logitech G G915 X LIGHTSPEED TKL",
+        note: "Low-profile wireless mechanical keyboard",
+        href: "https://www.vatanbilgisayar.com/logitech-g-g915-x-lightspeed-tkl-us-layout-kablosuz-oyuncu-klavyesi-siyah.html",
+    },
+    {
+        category: "Secondary Keyboard",
+        name: "AKKO 5075B Plus Air",
+        note: "Piano Pro Switch RGB wireless mechanical keyboard",
+        href: "https://en.akkogear.com/product/5075b-plus-air-mechanical-keyboard/",
     },
     {
         category: "Mouse",
-        name: "Performance Wireless Mouse",
-        note: "Design and navigation",
-        href: "#",
+        name: "ATK Blazing Sky U2 Ultimate",
+        note: "PAW 3950 Ultra sensor, Nordic 52840 wireless chipset, 8000Hz polling rate",
+        href: "https://www.atk.store/products/atk-blazing-sky-u2-v2-superlight-wireless-gaming-mouse",
     },
     {
-        category: "Audio",
-        name: "Studio Headphones",
-        note: "Focus and calls",
-        href: "#",
+        category: "Microphone",
+        name: "FIFINE AmpliGame AM8W USB/XLR",
+        note: "Versatile microphone with both USB and XLR connectivity options",
+        href: "https://fifinemicrophone.com/products/fifine-ampligame-am8-microphone",
     },
     {
-        category: "Other",
-        name: "Desk + Lighting Setup",
-        note: "Comfort and consistency",
-        href: "#",
+        category: "Audio Mixer",
+        name: "MaonoCaster AMG1 NEO Audio Mixer",
+        note: "Compact audio mixer designed for streamers, podcasters and content creators with multiple input options and built-in sound effects",
+        href: "https://www.maono.com/collections/maonocaster-audio-interface-and-mixer/products/maonocaster-amg1-neo-audio-mixer-for-game-streaming",
     },
+    {
+        category: "Headphones",
+        name: "HyperX Cloud III Wireless",
+        note: "Wireless gaming headphones with superior sound quality and comfort",
+        href: "https://row.hyperx.com/products/hyperx-cloud-iii-wireless-gaming-headset",
+    },
+    {
+        category: "Headphones",
+        name: "EPZ G30 Gaming IEMs",
+        note: "High-fidelity in-ear monitors designed for gaming with a hybrid driver configuration for immersive sound",
+        href: "https://epzaudio.com/products/epz-g30-hybrid-1dd-1ba-hifi-gaming-iems",
+    }
 ];
 
 export default function AboutPage() {
