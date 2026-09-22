@@ -14,11 +14,11 @@ import type { GithubRepo, LanyardResponse } from "@/components/home/types";
 import type { Metadata } from "next";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 
-const LANYARD_API_URL = "https://api.lanyard.rest/v1/users/996488031932514394";
+const LANYARD_API_URL = "https://api.lanyard.rest/v1/users/1517800496029630556";
 const FALLBACK_LANYARD: LanyardResponse = {
   data: {
     discord_user: {
-      id: "996488031932514394",
+      id: "1517800496029630556",
       avatar: "",
       username: "vezironi",
       discriminator: "0",
