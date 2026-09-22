@@ -1,6 +1,6 @@
 export async function GET() {
     try {
-        const res = await fetch("https://api.lanyard.rest/v1/users/996488031932514394", {
+        const res = await fetch("https://api.lanyard.rest/v1/users/1517800496029630556", {
             headers: {
                 Accept: "application/json",
             },
