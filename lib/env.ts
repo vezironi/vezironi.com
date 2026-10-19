@@ -10,6 +10,8 @@ export const env = {
   blobToken: read("BLOB_READ_WRITE_TOKEN"),
   authSecret: read("AUTH_SECRET"),
   adminDiscordId: read("ADMIN_DISCORD_ID") ?? "1517800496029630556",
+  discordClientId: read("AUTH_DISCORD_ID"),
+  discordClientSecret: read("AUTH_DISCORD_SECRET"),
   resendApiKey: read("RESEND_API_KEY"),
   contactToEmail: read("CONTACT_TO_EMAIL") ?? "contact@vezironi.com",
   contactFromEmail: read("CONTACT_FROM_EMAIL") ?? "no-reply@vezironi.com",

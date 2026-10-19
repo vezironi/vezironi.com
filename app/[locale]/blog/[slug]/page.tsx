@@ -19,8 +19,15 @@ async function renderPostHtml(markdown: string) {
 }
 
 export async function generateStaticParams({ params }: { params: { locale: string } }) {
-  const slugs = await listPostSlugs();
-  return slugs.filter((p) => (p.locales as string[]).includes(params.locale)).map((p) => ({ slug: p.slug }));
+  try {
+    const slugs = await listPostSlugs();
+    return slugs.filter((p) => (p.locales as string[]).includes(params.locale)).map((p) => ({ slug: p.slug }));
+  } catch (error) {
+    // Local dev without DATABASE_URL: Next may call this from a separate worker that can't
+    // open the embedded PGlite (it is locked by the main process). Pages then render on demand.
+    if (process.env.NODE_ENV === "development") return [];
+    throw error;
+  }
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/blog/[slug]">): Promise<Metadata> {

@@ -23,7 +23,9 @@ export async function createPgliteDb(dataDir?: string): Promise<Db> {
 
 /** Local dev DB: file-backed PGlite, seeded on first start so `bun dev` works with no setup. */
 async function createLocalDb(): Promise<Db> {
-  const db = await createPgliteDb(path.join(process.cwd(), ".data", "pglite"));
+  // Under node_modules/.cache so the dev file watcher ignores PGlite's writes
+  // (inside the project they trigger an endless Fast Refresh reload loop).
+  const db = await createPgliteDb(path.join(process.cwd(), "node_modules", ".cache", "vezironi-pglite"));
   const existing = await db.select({ id: schema.siteSettings.id }).from(schema.siteSettings).limit(1);
   if (existing.length === 0) {
     const { seed } = await import("./seed");

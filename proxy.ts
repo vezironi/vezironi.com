@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { SESSION_COOKIE } from "@/lib/auth/session";
 import { LOCALE_COOKIE } from "@/lib/i18n/config";
 import { isUnknownTopLevel, negotiateLocale, resolveRedirect } from "@/lib/i18n/negotiate";
 
@@ -8,6 +9,15 @@ const NOT_FOUND_PATH = "/_/not-found";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Optimistic gate: no session cookie at all → straight to login with a real redirect.
+  // The page itself still verifies the signed session (lib/auth/server.ts).
+  if (pathname.startsWith("/admin")) {
+    if (pathname !== "/admin/login" && !request.cookies.has(SESSION_COOKIE)) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
+    return NextResponse.next();
+  }
 
   // Otherwise "/de" would be rendered by app/[locale] with an invalid locale.
   if (isUnknownTopLevel(pathname)) {
@@ -30,5 +40,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|admin|_/|.*\\..*|opengraph-image|twitter-image).*)"],
+  matcher: ["/((?!_next|api|_/|.*\\..*|opengraph-image|twitter-image).*)"],
 };
