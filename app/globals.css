@@ -1,69 +1,131 @@
 @import "tailwindcss";
 
-.blog-content pre code.hljs {
-	color: #e5e7eb !important;
-	background: transparent;
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Blueprint tokens — light */
+:root {
+  --bg: #fafaf9;
+  --fg: #18181b;
+  --muted: #52525b;
+  --subtle: #71717a;
+  --surface: #ffffff;
+  --line: #e4e4e7;
+  --line-dashed: #d4d4d8;
+  --grid: #efefef;
+  --accent: #4d7c0f;
+  --accent-soft: #d9f99d;
+  --accent-shadow: #bef264;
+  color-scheme: light;
 }
 
-.blog-content pre:has(code.language-ts),
-.blog-content pre:has(code.language-typescript) {
-	border-color: rgb(96 165 250 / 0.6);
+/* Blueprint tokens — dark */
+.dark {
+  --bg: #0a0a0b;
+  --fg: #e7e7ea;
+  --muted: #9a9aa2;
+  --subtle: #6b6b73;
+  --surface: #111113;
+  --line: #232327;
+  --line-dashed: #2a2a2f;
+  --grid: #18181b;
+  --accent: #a3e635;
+  --accent-soft: #1a2e05;
+  --accent-shadow: #3f6212;
+  color-scheme: dark;
 }
 
-.blog-content pre:has(code.language-js),
-.blog-content pre:has(code.language-javascript) {
-	border-color: rgb(250 204 21 / 0.6);
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-dashed: var(--line-dashed);
+  --color-grid: var(--grid);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-shadow: var(--accent-shadow);
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
 }
 
-.blog-content pre:has(code.language-lua) {
-	border-color: rgb(249 168 212 / 0.6);
+body {
+  background: var(--bg);
+  color: var(--fg);
 }
 
-.blog-content pre:has(code.language-json) {
-	border-color: rgb(74 222 128 / 0.6);
+::selection {
+  background: var(--accent);
+  color: var(--bg);
 }
 
-.blog-content .hljs-comment,
-.blog-content .hljs-quote {
-	color: #6b7280 !important;
+/* Blog post typography */
+.prose-blueprint {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
 }
-
-.blog-content .hljs-keyword,
-.blog-content .hljs-selector-tag,
-.blog-content .hljs-literal,
-.blog-content .hljs-title,
-.blog-content .hljs-section,
-.blog-content .hljs-doctag,
-.blog-content .hljs-type {
-	color: #93c5fd !important;
+.prose-blueprint > * + * { margin-top: 1.1em; }
+.prose-blueprint h2,
+.prose-blueprint h3 {
+  color: var(--fg);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 2em;
+  scroll-margin-top: 5rem;
 }
-
-.blog-content .hljs-string,
-.blog-content .hljs-title.class_,
-.blog-content .hljs-title.class,
-.blog-content .hljs-variable,
-.blog-content .hljs-template-variable {
-	color: #86efac !important;
+.prose-blueprint h2 { font-size: 1.35em; }
+.prose-blueprint h3 { font-size: 1.12em; }
+.prose-blueprint h2 a::before {
+  content: "# ";
+  color: var(--accent);
+  font-family: var(--font-mono);
 }
-
-.blog-content .hljs-number,
-.blog-content .hljs-symbol,
-.blog-content .hljs-bullet,
-.blog-content .hljs-attribute,
-.blog-content .hljs-built_in {
-	color: #fde047 !important;
+.prose-blueprint strong { color: var(--fg); }
+.prose-blueprint a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.prose-blueprint h2 a, .prose-blueprint h3 a { text-decoration: none; }
+.prose-blueprint ul { list-style: none; padding-left: 0; }
+.prose-blueprint ul > li { position: relative; padding-left: 1.25em; }
+.prose-blueprint ul > li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.prose-blueprint ol { list-style: decimal; padding-left: 1.4em; }
+.prose-blueprint li + li { margin-top: 0.35em; }
+.prose-blueprint blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1em;
+  color: var(--fg);
+  font-style: italic;
 }
-
-.blog-content .hljs-function,
-.blog-content .hljs-title.function_,
-.blog-content .hljs-title.function,
-.blog-content .hljs-subst {
-	color: #f9a8d4 !important;
+.prose-blueprint :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--fg);
 }
+.prose-blueprint pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 1em 1.1em;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow-x: auto;
+}
+.prose-blueprint .shiki span { color: var(--shiki-light); }
+.dark .prose-blueprint .shiki span { color: var(--shiki-dark); }
+.prose-blueprint table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.prose-blueprint th { color: var(--fg); text-align: left; font-weight: 600; }
+.prose-blueprint th, .prose-blueprint td { border-bottom: 1px solid var(--line); padding: 0.5em 0.75em 0.5em 0; }
+.prose-blueprint img { border: 1px solid var(--line); border-radius: 8px; max-width: 100%; height: auto; }
+.prose-blueprint hr { border: 0; border-top: 1px dashed var(--line-dashed); }
 
-.blog-content .hljs-params,
-.blog-content .hljs-property,
-.blog-content .hljs-operator,
-.blog-content .hljs-punctuation {
-	color: #d1d5db !important;
+/* Faint blueprint grid used behind figures and OG images */
+.bg-blueprint {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 14px 14px;
 }

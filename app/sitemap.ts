@@ -1,23 +1,10 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl } from "@/lib/seo";
-import { getAllPosts } from "@/lib/blog";
+import { getGallery, listPostSlugs } from "@/lib/content/queries";
+import { env } from "@/lib/env";
+import { buildSitemap } from "@/lib/seo/sitemap";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["/", "/about", "/services", "/gallery", "/blog", "/contact"];
-
-  const staticEntries = staticRoutes.map((route) => ({
-    url: absoluteUrl(route),
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: route === "/" ? 1 : 0.7,
-  }));
-
-  const blogEntries = getAllPosts().map((post) => ({
-    url: absoluteUrl(`/blog/${post.slug}`),
-    lastModified: new Date(post.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
-
-  return [...staticEntries, ...blogEntries];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (env.noindex) return [];
+  const [posts, gallery] = await Promise.all([listPostSlugs(), getGallery("en")]);
+  return buildSitemap({ posts, hasGallery: gallery.length > 0 });
 }
