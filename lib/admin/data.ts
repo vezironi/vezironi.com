@@ -2,6 +2,7 @@ import "server-only";
 import { asc, count, desc, eq } from "drizzle-orm";
 import { getDb } from "@/lib/db/client";
 import * as s from "@/lib/db/schema";
+import { listMessages as queryMessages } from "./messages";
 
 // Admin reads are always fresh (no "use cache"); every caller is behind requireAdminPage().
 
@@ -69,8 +70,8 @@ export async function listGallery() {
   return (await getDb()).select().from(s.galleryItems).orderBy(asc(s.galleryItems.sortOrder));
 }
 
-export async function listMessages() {
-  return (await getDb()).select().from(s.messages).orderBy(desc(s.messages.createdAt));
+export async function listMessages(opts?: { unreadOnly?: boolean }) {
+  return queryMessages(await getDb(), opts);
 }
 
 export async function recentMessages(limit = 5) {
