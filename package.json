@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "db:seed": "bun lib/db/seed-cli.ts"
+    "db:seed": "bun lib/db/seed-cli.ts",
+    "db:migrate": "bun scripts/db-migrate.ts",
+    "vercel-build": "bun run db:migrate && next build"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.10",
