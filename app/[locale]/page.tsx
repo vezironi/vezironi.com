@@ -23,7 +23,7 @@ import { isLocale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 
 /** Game projects shown on the home page; the rest are on /games. */
-const HOME_GAMES = 4;
+const HOME_GAMES = 6;
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
