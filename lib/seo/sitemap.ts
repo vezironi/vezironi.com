@@ -5,7 +5,7 @@ import { languageAlternates, localeUrl } from "./metadata";
 type PostEntry = { slug: string; locales: Locale[]; updatedAt: string };
 
 export function buildSitemap({ posts, hasGallery }: { posts: PostEntry[]; hasGallery: boolean }): MetadataRoute.Sitemap {
-  const pages = ["", "/blog", "/contact", ...(hasGallery ? ["/gallery"] : [])];
+  const pages = ["", "/blog", "/games", "/contact", ...(hasGallery ? ["/gallery"] : [])];
   const entries: MetadataRoute.Sitemap = [];
 
   for (const path of pages) {

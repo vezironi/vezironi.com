@@ -7,6 +7,7 @@ import { pick } from "@/lib/content/localize";
 import {
   getExperiencesUncached,
   getGalleryUncached,
+  getGameProjectsUncached,
   getPackagesUncached,
   getPostUncached,
   getPostsUncached,
@@ -131,5 +132,25 @@ describe("content queries", () => {
 
   it("returns an empty gallery", async () => {
     expect(await getGalleryUncached(db, "tr")).toEqual([]);
+  });
+
+  it("localizes game projects and derives the thumbnail from the YouTube URL", async () => {
+    const [first] = await getGameProjectsUncached(db, "en");
+    expect(first).toMatchObject({
+      name: "Marriage V2",
+      store: "0Resmon",
+      youtubeUrl: "https://www.youtube.com/watch?v=UYbTJGIbblI",
+      tebexUrl: "https://0resmon.tebex.io/package/7654846",
+      thumbnailUrl: "https://i.ytimg.com/vi/UYbTJGIbblI/maxresdefault.jpg",
+    });
+    expect(first.description).toMatch(/^A marriage system/);
+  });
+
+  it("hides game projects that are not visible", async () => {
+    const before = await getGameProjectsUncached(db, "tr");
+    await db.update(s.gameProjects).set({ visible: false }).where(eq(s.gameProjects.id, before[0].id));
+    const after = await getGameProjectsUncached(db, "tr");
+    expect(after).toHaveLength(before.length - 1);
+    await db.update(s.gameProjects).set({ visible: true }).where(eq(s.gameProjects.id, before[0].id));
   });
 });

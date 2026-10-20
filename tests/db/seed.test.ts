@@ -28,6 +28,23 @@ describe("seed", () => {
     ]);
   });
 
+  it("creates the 26 game projects from the migration, without the duplicate casino", async () => {
+    const rows = await db.select().from(s.gameProjects).orderBy(asc(s.gameProjects.sortOrder));
+    expect(rows).toHaveLength(26);
+    expect(rows[0]).toMatchObject({ name: "Marriage V2", store: "0Resmon", visible: true });
+    expect(rows.at(-1)).toMatchObject({ name: "CarPlay", store: "FastScript" });
+    expect(rows.filter((r) => r.name === "Manageable Casino")).toHaveLength(1);
+    expect(rows.filter((r) => r.tebexUrl === null).map((r) => r.name)).toEqual([
+      "VehicleKeys",
+      "Chat v3",
+      "GPS V2",
+      "Manageable Casino",
+      "Multicharacter v2",
+      "Dailyrewards",
+      "Repair Kit",
+    ]);
+  });
+
   it("seeds the npm package separately from projects", async () => {
     const rows = await db.select().from(s.packages);
     expect(rows).toHaveLength(1);

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { LocaleSwitcher } from "./locale-switcher";
+import { MobileNav } from "./mobile-nav";
 import { NavLinks } from "./nav-links";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -19,6 +20,7 @@ export function Header({
 }) {
   const links = [
     { href: `/${locale}/blog`, label: dict.nav.blog },
+    { href: `/${locale}/games`, label: dict.nav.games },
     ...(hasGallery ? [{ href: `/${locale}/gallery`, label: dict.nav.gallery }] : []),
     { href: `/${locale}/contact`, label: dict.nav.contact },
   ];
@@ -30,13 +32,20 @@ export function Header({
           VO<span className="text-accent">.</span>
         </Link>
         <div className="flex items-center gap-2 sm:gap-4">
-          <NavLinks links={links} />
+          <div className="hidden sm:block">
+            <NavLinks links={links} />
+          </div>
           <div className="flex items-center gap-1.5">
             {commandMenu}
             <LocaleSwitcher locale={locale} label={dict.nav.language} />
             <ThemeToggle
               label={dict.nav.theme}
               names={{ light: dict.command.light, dark: dict.command.dark, system: dict.command.system }}
+            />
+            <MobileNav
+              links={links}
+              home={{ href: `/${locale}`, label: dict.nav.home }}
+              labels={{ open: dict.nav.openMenu, close: dict.nav.closeMenu }}
             />
           </div>
         </div>

@@ -79,6 +79,7 @@ describe("buildSitemap", () => {
         "https://vezironi.com/tr/blog",
         "https://vezironi.com/en/contact",
         "https://vezironi.com/tr/gallery",
+        "https://vezironi.com/en/games",
         "https://vezironi.com/tr/blog/both",
         "https://vezironi.com/en/blog/both",
         "https://vezironi.com/tr/blog/sadece-tr",

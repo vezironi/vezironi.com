@@ -15,6 +15,13 @@
       "when": 1792364719236,
       "tag": "0001_packages",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792507938366,
+      "tag": "0002_game_projects",
+      "breakpoints": true
     }
   ]
 }

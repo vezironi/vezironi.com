@@ -11,7 +11,11 @@ const nextConfig: NextConfig = {
   // PGlite loads its WASM/data files relative to its own package; keep it unbundled.
   serverExternalPackages: ["@electric-sql/pglite"],
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+      // Game project thumbnails, derived from their YouTube URLs.
+      { protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" },
+    ],
   },
   turbopack: {
     rules: {

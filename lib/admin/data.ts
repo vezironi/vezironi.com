@@ -8,8 +8,9 @@ import { listMessages as queryMessages } from "./messages";
 
 export async function getDashboardCounts() {
   const db = await getDb();
-  const [[projects], [packages], [posts], [gallery], [unread], [messages]] = await Promise.all([
+  const [[projects], [games], [packages], [posts], [gallery], [unread], [messages]] = await Promise.all([
     db.select({ n: count() }).from(s.projects),
+    db.select({ n: count() }).from(s.gameProjects),
     db.select({ n: count() }).from(s.packages),
     db.select({ n: count() }).from(s.posts),
     db.select({ n: count() }).from(s.galleryItems),
@@ -18,6 +19,7 @@ export async function getDashboardCounts() {
   ]);
   return {
     projects: projects.n,
+    games: games.n,
     packages: packages.n,
     posts: posts.n,
     gallery: gallery.n,
@@ -39,6 +41,10 @@ export async function listSettings() {
 
 export async function listProjects() {
   return (await getDb()).select().from(s.projects).orderBy(asc(s.projects.sortOrder));
+}
+
+export async function listGameProjects() {
+  return (await getDb()).select().from(s.gameProjects).orderBy(asc(s.gameProjects.sortOrder));
 }
 
 export async function listPackages() {

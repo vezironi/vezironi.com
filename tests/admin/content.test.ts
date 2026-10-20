@@ -89,6 +89,16 @@ describe("admin content core", () => {
     expect((await saveEntity(db, "packages", { name: "@vezironi/new-pkg", descriptionTr: "a", descriptionEn: "a" })).ok).toBe(true);
   });
 
+  it("requires a YouTube video URL for game projects and keeps Tebex optional", async () => {
+    const game = { name: "Yeni", store: "0Resmon", descriptionTr: "a", descriptionEn: "a", visible: "on" };
+    const bad = await saveEntity(db, "gameProjects", { ...game, youtubeUrl: "https://example.com/watch?v=UYbTJGIbblI" });
+    expect(bad.ok === false && bad.errors.youtubeUrl).toBeTruthy();
+    const ok = await saveEntity(db, "gameProjects", { ...game, youtubeUrl: "https://youtu.be/UYbTJGIbblI", tebexUrl: "" });
+    expect(ok).toMatchObject({ ok: true, tag: "games" });
+    const rows = await db.select().from(s.gameProjects).orderBy(asc(s.gameProjects.sortOrder));
+    expect(rows.at(-1)).toMatchObject({ name: "Yeni", tebexUrl: null, sortOrder: 26 });
+  });
+
   it("reorders rows to the given id order", async () => {
     const rows = await db.select().from(s.references).orderBy(asc(s.references.sortOrder));
     const reversed = rows.map((r) => r.id).reverse();

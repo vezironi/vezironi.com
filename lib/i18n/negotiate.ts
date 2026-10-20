@@ -23,7 +23,7 @@ export function negotiateLocale(acceptLanguage: string | null, cookie?: string):
 }
 
 const LEGACY_HOME = new Set(["/about", "/services"]);
-const LOCALIZED_PREFIXES = ["/blog", "/gallery", "/contact"];
+const LOCALIZED_PREFIXES = ["/blog", "/games", "/gallery", "/contact"];
 const PASSTHROUGH_PREFIXES = ["/admin", "/api"];
 
 function hasPrefix(pathname: string, prefix: string) {

@@ -4,6 +4,7 @@ import { TAGS, type ContentTag } from "@/lib/content/tags";
 import type { Db } from "@/lib/db/client";
 import * as s from "@/lib/db/schema";
 import { deleteImage } from "@/lib/storage";
+import { youtubeId } from "@/lib/youtube";
 
 // Validation and writes for the simple admin entities. Inputs come straight from
 // FormData (all strings); server actions in ./actions/content.ts wrap these with
@@ -18,6 +19,7 @@ const MSG = {
   image: "Görsel yükle ya da /seed, /uploads veya https:// ile başlayan bir adres gir.",
   year: "2000–2100 arasında bir yıl gir.",
   email: "Geçerli bir e-posta adresi gir.",
+  youtube: "Geçerli bir YouTube video adresi gir (https://www.youtube.com/watch?v=…).",
 };
 
 const text = z.string({ error: MSG.required }).trim().min(1, MSG.required);
@@ -60,6 +62,18 @@ const schemas = {
     descriptionEn: text,
     tech: list,
     year,
+    visible: checkbox,
+  }),
+  gameProjects: z.object({
+    name: text,
+    store: text,
+    youtubeUrl: z
+      .string({ error: MSG.youtube })
+      .trim()
+      .refine((v) => youtubeId(v) !== null, MSG.youtube),
+    tebexUrl: optionalUrl,
+    descriptionTr: text,
+    descriptionEn: text,
     visible: checkbox,
   }),
   packages: z.object({
@@ -108,6 +122,7 @@ export type Entity = keyof typeof schemas;
 
 const tables = {
   projects: s.projects,
+  gameProjects: s.gameProjects,
   packages: s.packages,
   references: s.references,
   experiences: s.experiences,
@@ -116,6 +131,7 @@ const tables = {
 
 export const ENTITY_TAG: Record<Entity, ContentTag> = {
   projects: TAGS.projects,
+  gameProjects: TAGS.games,
   packages: TAGS.packages,
   references: TAGS.references,
   experiences: TAGS.experiences,

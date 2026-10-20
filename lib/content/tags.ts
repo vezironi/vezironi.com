@@ -7,6 +7,7 @@ export const TAGS = {
   posts: "posts",
   gallery: "gallery",
   packages: "packages",
+  games: "games",
 } as const;
 
 export type ContentTag = (typeof TAGS)[keyof typeof TAGS];

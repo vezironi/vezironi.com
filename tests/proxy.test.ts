@@ -22,6 +22,7 @@ describe("resolveRedirect", () => {
     ["/blog", "en", "/en/blog"],
     ["/blog/foo", "en", "/en/blog/foo"],
     ["/gallery", "tr", "/tr/gallery"],
+    ["/games", "en", "/en/games"],
     ["/contact", "tr", "/tr/contact"],
   ] as const)("%s (%s) -> %s", (path, locale, target) => {
     expect(resolveRedirect(path, locale)).toBe(target);

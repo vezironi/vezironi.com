@@ -37,6 +37,7 @@ export function Footer({
   const pages = [
     { href: `/${locale}`, label: dict.nav.home },
     { href: `/${locale}/blog`, label: dict.nav.blog },
+    { href: `/${locale}/games`, label: dict.nav.games },
     ...(hasGallery ? [{ href: `/${locale}/gallery`, label: dict.nav.gallery }] : []),
     { href: `/${locale}/contact`, label: dict.nav.contact },
   ];

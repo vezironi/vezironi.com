@@ -29,6 +29,19 @@ export const projects = pgTable("projects", {
   visible: boolean("visible").notNull().default(true),
 });
 
+/** FiveM scripts built for stores; the thumbnail is derived from the YouTube URL. */
+export const gameProjects = pgTable("game_projects", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  store: text("store").notNull(),
+  youtubeUrl: text("youtube_url").notNull(),
+  tebexUrl: text("tebex_url"),
+  descriptionTr: text("description_tr").notNull(),
+  descriptionEn: text("description_en").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  visible: boolean("visible").notNull().default(true),
+});
+
 /** Published npm packages; version, license and downloads are fetched live from npm. */
 export const packages = pgTable("packages", {
   id: serial("id").primaryKey(),

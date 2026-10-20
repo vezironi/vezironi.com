@@ -3,6 +3,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import { getDb, type Db } from "@/lib/db/client";
 import * as s from "@/lib/db/schema";
 import { locales, type Locale } from "@/lib/i18n/config";
+import { youtubeId, youtubeThumbnail } from "@/lib/youtube";
 import { pick } from "./localize";
 import { TAGS } from "./tags";
 
@@ -23,6 +24,16 @@ export type Project = {
   description: string;
   tech: string[];
   year: number;
+};
+
+export type GameProject = {
+  id: number;
+  name: string;
+  store: string;
+  youtubeUrl: string;
+  tebexUrl: string | null;
+  thumbnailUrl: string | null;
+  description: string;
 };
 
 export type Reference = { id: number; name: string; logoUrl: string; url: string | null };
@@ -100,6 +111,26 @@ export async function getProjectsUncached(db: Db, locale: Locale): Promise<Proje
     tech: r.tech,
     year: r.year,
   }));
+}
+
+export async function getGameProjectsUncached(db: Db, locale: Locale): Promise<GameProject[]> {
+  const rows = await db
+    .select()
+    .from(s.gameProjects)
+    .where(eq(s.gameProjects.visible, true))
+    .orderBy(asc(s.gameProjects.sortOrder));
+  return rows.map((r) => {
+    const videoId = youtubeId(r.youtubeUrl);
+    return {
+      id: r.id,
+      name: r.name,
+      store: r.store,
+      youtubeUrl: r.youtubeUrl,
+      tebexUrl: r.tebexUrl,
+      thumbnailUrl: videoId ? youtubeThumbnail(videoId) : null,
+      description: pick(r, "description", locale) ?? "",
+    };
+  });
 }
 
 export async function getPackagesUncached(db: Db, locale: Locale): Promise<Package[]> {
@@ -221,6 +252,13 @@ export async function getProjects(locale: Locale) {
   cacheLife("max");
   cacheTag(TAGS.projects);
   return getProjectsUncached(await getDb(), locale);
+}
+
+export async function getGameProjects(locale: Locale) {
+  "use cache";
+  cacheLife("max");
+  cacheTag(TAGS.games);
+  return getGameProjectsUncached(await getDb(), locale);
 }
 
 export async function getPackages(locale: Locale) {

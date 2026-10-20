@@ -12,6 +12,7 @@ export default async function DashboardPage() {
   const [counts, messages] = await Promise.all([getDashboardCounts(), recentMessages()]);
   const cards = [
     { label: "Proje", value: counts.projects, href: "/admin/projects" },
+    { label: "Oyun projesi", value: counts.games, href: "/admin/games" },
     { label: "Paket", value: counts.packages, href: "/admin/packages" },
     { label: "Blog yazısı", value: counts.posts, href: "/admin/blog" },
     { label: "Fotoğraf", value: counts.gallery, href: "/admin/gallery" },
@@ -22,7 +23,7 @@ export default async function DashboardPage() {
     <>
       <PageHeader title={`Merhaba, ${user.name}`} description="Sitedeki içeriklerin özeti." />
       <div className="grid gap-6 p-6">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {cards.map((c) => (
             <li key={c.label}>
               <Link href={c.href} className="block rounded-lg border border-line bg-surface p-4 transition-colors hover:border-accent">

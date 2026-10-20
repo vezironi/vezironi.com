@@ -11,15 +11,19 @@ import { getContributions } from "@/lib/github";
 import { getNpmPackage } from "@/lib/npm";
 import { Intro } from "@/components/home/intro";
 import { PostList } from "@/components/home/latest-posts";
+import { GameProjects } from "@/components/home/game-projects";
 import { Projects } from "@/components/home/projects";
 import { Packages } from "@/components/home/packages";
 import { References } from "@/components/home/references";
 import { Stack } from "@/components/home/stack";
 import { VOFigure } from "@/components/home/vo-figure";
 import { Section } from "@/components/site/section";
-import { getExperiences, getPackages, getPosts, getProjects, getReferences, getSettings, getStack } from "@/lib/content/queries";
+import { getExperiences, getGameProjects, getPackages, getPosts, getProjects, getReferences, getSettings, getStack } from "@/lib/content/queries";
 import { isLocale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+
+/** Game projects shown on the home page; the rest are on /games. */
+const HOME_GAMES = 4;
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
@@ -35,9 +39,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dict = getDictionary(locale);
-  const [settings, projects, packages, references, experiences, stack, posts, contributions] = await Promise.all([
+  const [settings, projects, games, packages, references, experiences, stack, posts, contributions] = await Promise.all([
     getSettings(locale),
     getProjects(locale),
+    getGameProjects(locale),
     getPackages(locale),
     getReferences(),
     getExperiences(locale),
@@ -63,6 +68,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <Section id="projects" title={dict.sections.projects} meta={String(projects.length).padStart(2, "0")}>
         <Projects projects={projects} locale={locale} />
       </Section>
+      {games.length > 0 && (
+        <Section
+          id="games"
+          title={dict.sections.games}
+          meta={
+            <Link href={`/${locale}/games`} className="transition-colors hover:text-accent">
+              {dict.sections.allGames}
+            </Link>
+          }
+        >
+          <GameProjects games={games.slice(0, HOME_GAMES)} locale={locale} />
+        </Section>
+      )}
       {packages.length > 0 && (
         <Section id="packages" title={dict.sections.packages} meta={String(packages.length).padStart(2, "0")}>
           <Packages packages={packages} npm={npm} locale={locale} labels={dict.packages} />

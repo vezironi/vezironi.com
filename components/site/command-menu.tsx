@@ -1,7 +1,7 @@
 "use client";
 
 import { Command } from "cmdk";
-import { ArrowUpRight, FileText, Globe, Home, Image as ImageIcon, Mail, Monitor, Moon, Search, Send, Sun } from "lucide-react";
+import { ArrowUpRight, FileText, Gamepad2, Globe, Home, Image as ImageIcon, Mail, Monitor, Moon, Search, Send, Sun } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -99,6 +99,7 @@ export function CommandMenu({ locale, dict, items }: { locale: Locale; dict: Dic
               <Command.Group heading={t.pages} className={groupCls}>
                 <Item icon={<Home />} onSelect={go(`/${locale}`)}>{dict.nav.home}</Item>
                 <Item icon={<FileText />} onSelect={go(`/${locale}/blog`)}>{dict.nav.blog}</Item>
+                <Item icon={<Gamepad2 />} onSelect={go(`/${locale}/games`)}>{dict.nav.games}</Item>
                 {items.hasGallery && (
                   <Item icon={<ImageIcon />} onSelect={go(`/${locale}/gallery`)}>{dict.nav.gallery}</Item>
                 )}
