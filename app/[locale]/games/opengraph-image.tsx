@@ -1,4 +1,3 @@
-import { getGameProjects } from "@/lib/content/queries";
 import { OG_SIZE } from "@/lib/seo/og";
 import { pageOgImage } from "@/lib/seo/page-og";
 
@@ -11,9 +10,4 @@ export default pageOgImage({
   title: (d) => d.meta.gamesTitle,
   subtitle: (d) => d.meta.gamesDescription,
   path: "/games",
-  aside: async (locale) => {
-    const games = await getGameProjects(locale);
-    const stores = [...new Set(games.map((g) => g.store))];
-    return [locale === "tr" ? `${games.length} proje` : `${games.length} projects`, ...stores];
-  },
 });

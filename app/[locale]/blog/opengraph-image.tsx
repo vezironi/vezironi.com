@@ -1,4 +1,3 @@
-import { getPosts } from "@/lib/content/queries";
 import { OG_SIZE } from "@/lib/seo/og";
 import { pageOgImage } from "@/lib/seo/page-og";
 
@@ -11,5 +10,4 @@ export default pageOgImage({
   title: (d) => d.meta.blogTitle,
   subtitle: (d) => d.meta.blogDescription,
   path: "/blog",
-  aside: async (locale) => (await getPosts(locale, { limit: 3 })).map((p) => p.title),
 });

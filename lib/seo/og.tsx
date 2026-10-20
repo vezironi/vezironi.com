@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import type { ReactNode } from "react";
 import { buildVO } from "@/lib/vo-geometry";
@@ -11,6 +13,10 @@ const SUBTLE = "#6b6b73";
 const ACCENT = "#a3e635";
 const GRID = "#18181b";
 const LINE = "#2a2a2f";
+
+const [jakartaRegular, jakartaBold] = await Promise.all(
+  ["Regular", "Bold"].map((w) => readFile(join(process.cwd(), `assets/fonts/PlusJakartaSans-${w}.ttf`))),
+);
 
 function Frame({ children, footerLeft, footerRight }: { children: ReactNode; footerLeft: string; footerRight: string }) {
   return (
@@ -93,54 +99,25 @@ export function renderHomeOg({ name, title, site, eyebrow }: { name: string; tit
   );
 }
 
-/** Regular pages (blog index, gallery, contact); `aside` lines give each page its own detail. */
-export function renderPageOg({
-  eyebrow,
-  title,
-  subtitle,
-  site,
-  aside = [],
-}: {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-  site: string;
-  aside?: string[];
-}) {
+/** Regular pages (blog index, games, gallery, contact). */
+export function renderPageOg({ eyebrow, title, subtitle, site }: { eyebrow: string; title: string; subtitle: string; site: string }) {
   return new ImageResponse(
     (
       <Frame footerLeft={site} footerRight="Vezir Oni — Full Stack Developer">
         <TopBar eyebrow={eyebrow} />
-        <div style={{ display: "flex", flex: 1, alignItems: "center", gap: 48 }}>
-          <div style={{ display: "flex", flex: 1, flexDirection: "column", gap: 20 }}>
-            <div style={{ display: "flex", fontSize: 96, fontWeight: 700, letterSpacing: -3, lineHeight: 1 }}>{title}</div>
-            <div style={{ display: "flex", fontSize: 30, color: MUTED, lineHeight: 1.4 }}>{subtitle}</div>
-          </div>
-          {aside.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: 420,
-                gap: 14,
-                padding: "26px 28px",
-                border: `1px solid ${LINE}`,
-                borderRadius: 14,
-                background: "#111113",
-              }}
-            >
-              {aside.map((line, i) => (
-                <div key={line} style={{ display: "flex", gap: 12, fontSize: 24, lineHeight: 1.3, color: i === 0 ? FG : MUTED }}>
-                  <span style={{ color: ACCENT, fontFamily: "monospace" }}>{i === 0 ? "→" : "·"}</span>
-                  <span>{line}</span>
-                </div>
-              ))}
-            </div>
-          )}
+        <div style={{ display: "flex", flex: 1, flexDirection: "column", justifyContent: "center", gap: 20 }}>
+          <div style={{ display: "flex", fontSize: 96, fontWeight: 700, letterSpacing: -3, lineHeight: 1 }}>{title}</div>
+          <div style={{ display: "flex", fontSize: 30, color: MUTED, lineHeight: 1.4 }}>{subtitle}</div>
         </div>
       </Frame>
     ),
-    OG_SIZE,
+    {
+      ...OG_SIZE,
+      fonts: [
+        { name: "Plus Jakarta Sans", data: jakartaRegular, weight: 400, style: "normal" },
+        { name: "Plus Jakarta Sans", data: jakartaBold, weight: 700, style: "normal" },
+      ],
+    },
   );
 }
 

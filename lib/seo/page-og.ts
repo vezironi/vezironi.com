@@ -7,8 +7,6 @@ type PageOg = {
   title: (d: Dictionary) => string;
   subtitle: (d: Dictionary) => string;
   path: string;
-  /** Page-specific lines shown in the side panel. */
-  aside?: (locale: Locale) => Promise<string[]>;
 };
 
 /** Shared opengraph-image handler for simple pages. */
@@ -22,7 +20,6 @@ export function pageOgImage(page: PageOg) {
       title: page.title(dict),
       subtitle: page.subtitle(dict),
       site: `vezironi.com/${locale}${page.path}`,
-      aside: page.aside ? await page.aside(locale) : [],
     });
   };
 }
