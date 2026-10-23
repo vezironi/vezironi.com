@@ -4,6 +4,7 @@ import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { env } from "@/lib/env";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/site/footer";
+import { GuncelBantBanner } from "@/components/site/guncel-bant-banner";
 import { Header } from "@/components/site/header";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { CommandMenu, type CommandItems } from "@/components/site/command-menu";
@@ -58,6 +59,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
     <html lang={locale} className={`${jakarta.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
       <body className="flex min-h-dvh flex-col overflow-x-clip font-sans">
         <ThemeProvider>
+          <GuncelBantBanner />
           <Header
             locale={locale}
             dict={dict}
