@@ -16,7 +16,7 @@ describe("seed", () => {
     await seed(db); // idempotent
   });
 
-  it("seeds the six projects in order", async () => {
+  it("seeds the seven projects in order", async () => {
     const rows = await db.select().from(s.projects).orderBy(asc(s.projects.sortOrder));
     expect(rows.map((r) => r.name)).toEqual([
       "Keyra",
@@ -25,6 +25,7 @@ describe("seed", () => {
       "White Bilişim",
       "0Resmon",
       "Hype Scripts",
+      "Vatan Sağ Olsun",
     ]);
   });
 

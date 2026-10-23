@@ -84,6 +84,17 @@ export const projectsSeed = [
     tech: ["Lua", "TypeScript", "Next.js"],
     year: 2026,
   },
+  {
+    name: "Vatan Sağ Olsun",
+    url: "https://vatansagolsun.vezironi.com/",
+    slug: "vatansagolsun",
+    descriptionTr:
+      "2000 yılından bu yana görev başında şehit düşen asker, polis ve diğer kamu görevlilerini anan dijital bir arşiv. 88 binden fazla kaydı yıllara göre listeliyor, her gün o tarihe denk gelen yıl dönümlerini gösteriyor ve herkese açık bir API sunuyor.",
+    descriptionEn:
+      "A digital memorial for soldiers, police officers and other public servants who have fallen on duty since 2000. It lists more than 88,000 records by year, shows the anniversaries that fall on each day and offers a public API.",
+    tech: ["Python", "FastAPI"],
+    year: 2026,
+  },
 ];
 
 // DRAFT descriptions.
