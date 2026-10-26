@@ -86,7 +86,7 @@ export const projectsSeed = [
   },
   {
     name: "Vatan Sağ Olsun",
-    url: "https://vatansagolsun.vezironi.com/",
+    url: "https://vatansagolsun.com.tr/",
     slug: "vatansagolsun",
     descriptionTr:
       "2000 yılından bu yana görev başında şehit düşen asker, polis ve diğer kamu görevlilerini anan dijital bir arşiv. 88 binden fazla kaydı yıllara göre listeliyor, her gün o tarihe denk gelen yıl dönümlerini gösteriyor ve herkese açık bir API sunuyor.",
